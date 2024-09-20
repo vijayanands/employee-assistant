@@ -21,8 +21,8 @@ UNIMPLEMENTED_MESSAGE = "Dashboard for {} is not implemented yet."
 # Navigation options for each persona
 PERSONA_NAVIGATION = {
     "Individual Contributor": ["Productivity", "Performance & Career", "Learning & Skills", "Tasks"],
-    "First Line Manager": ["Overview", "Productivity", "Productivity2", "Performance & Career", "Learning & Skills", "Engagement & Compliance"],
-    "Second Line Manager/Director": ["Executive Summary", "Productivity", "Productivity2", "Performance", "Projects and Portfolio", "Learning & Skills", "Engagement & Compliance"],
+    "First Line Manager": ["Overview", "Productivity", "Performance & Career", "Learning & Skills", "Engagement & Compliance"],
+    "Second Line Manager/Director": ["Executive Summary", "Productivity", "Performance", "Projects and Portfolio", "Learning & Skills", "Engagement & Compliance"],
     "HR Business Partner/HR Head": ["Overview", "Engagement & Compliance", "Recruitment", "Training", "Demographics"]
 }
 

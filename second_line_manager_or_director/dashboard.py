@@ -1,5 +1,6 @@
 import streamlit as st
 
+from second_line_manager_or_director.org_productivity_dashboard import org_productivity_dashboard
 from second_line_manager_or_director.st_2nd_mgr_engagement_and_compliance_dashboard import \
     director_engagement_compliance_dashboard
 from second_line_manager_or_director.st_2nd_project_and_portfolio_dashboard import director_project_portfolio_dashboard
@@ -13,9 +14,7 @@ def show_director_dashboard(nav_option):
     if nav_option == "Executive Summary":
         director_executive_summary_dashboard()
     elif nav_option == "Productivity":
-        director_productivity_dashboard()
-    elif nav_option == "Productivity2":
-        comprehensive_productivity_dashboard()
+        org_productivity_dashboard()
     elif nav_option == "Performance":
         director_performance_dashboard()
     elif nav_option == "Projects and Portfolio":

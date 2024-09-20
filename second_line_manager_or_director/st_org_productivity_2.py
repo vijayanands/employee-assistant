@@ -4,7 +4,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import random
 from ui.style import (
-    create_styled_metric, create_styled_bullet_list, create_styled_tabs,
+    create_styled_metric, create_styled_tabs,
     create_pie_chart, display_pie_chart,
     apply_styled_dropdown_css, create_styled_bar_chart
 )
@@ -128,7 +128,6 @@ def project_status_tab(projects_data):
             x=[proj['name']],
             y=[proj['completion']],
             name=proj['name'],
-            marker_color='green' if proj['status'] == 'on-track' else 'orange'
         ))
     fig.update_layout(
         title="Project Completion Status",
