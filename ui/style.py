@@ -1,9 +1,10 @@
 import numpy as np
 import pandas as pd
-import streamlit as st
 import plotly.express as px
-from matplotlib import pyplot as plt
 import plotly.graph_objects as go
+import streamlit as st
+from matplotlib import pyplot as plt
+
 
 def create_styled_metric(label, value, icon):
     styled_metric_css = """
@@ -46,6 +47,7 @@ def create_styled_metric(label, value, icon):
 
     # Render the metric using st.markdown
     st.markdown(full_html, unsafe_allow_html=True)
+
 
 def create_styled_bullet_list(items, title=None):
     styled_list_css = """
@@ -106,8 +108,10 @@ def create_styled_bullet_list(items, title=None):
     # Render the styled list using st.markdown
     st.markdown(full_html, unsafe_allow_html=True)
 
+
 def create_styled_radio_buttons(label, options, key):
-    st.markdown(f"""
+    st.markdown(
+        f"""
     <style>
     div.row-widget.stRadio > div {{
         flex-direction: row;
@@ -146,27 +150,30 @@ def create_styled_radio_buttons(label, options, key):
         text-align: left;
     }}
     </style>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
     st.markdown(f'<p class="custom-radio-label">{label}</p>', unsafe_allow_html=True)
     return st.radio("", options, key=key, label_visibility="collapsed")
 
+
 def create_pie_chart(
-        data,
-        names,
-        values,
-        title=None,
-        color_sequence=px.colors.qualitative.Pastel,
-        hole=0.4,
-        height=400,
-        width=400,
-        show_legend=False,
-        text_info='percent+label',
-        hover_info='label+percent+value',
-        text_position='inside',
-        pull=None,
-        sort_values=False,
-        color=None
+    data,
+    names,
+    values,
+    title=None,
+    color_sequence=px.colors.qualitative.Pastel,
+    hole=0.4,
+    height=400,
+    width=400,
+    show_legend=False,
+    text_info="percent+label",
+    hover_info="label+percent+value",
+    text_position="inside",
+    pull=None,
+    sort_values=False,
+    color=None,
 ):
     # Convert to DataFrame if it's a dict
     if isinstance(data, dict):
@@ -185,7 +192,7 @@ def create_pie_chart(
         hole=hole,
         height=height,
         width=width,
-        color=color
+        color=color,
     )
 
     fig.update_traces(
@@ -193,7 +200,7 @@ def create_pie_chart(
         textinfo=text_info,
         hoverinfo=hover_info,
         pull=pull,
-        marker=dict(line=dict(color='white', width=2))
+        marker=dict(line=dict(color="white", width=2)),
     )
 
     fig.update_layout(
@@ -205,12 +212,17 @@ def create_pie_chart(
 
     return fig
 
+
 def display_pie_chart(fig, use_container_width=True):
-    return st.plotly_chart(fig, use_container_width=use_container_width, config={'displayModeBar': False})
+    return st.plotly_chart(
+        fig, use_container_width=use_container_width, config={"displayModeBar": False}
+    )
+
 
 def create_styled_tabs(tab_labels):
     # CSS for custom tab styling
-    st.markdown("""
+    st.markdown(
+        """
     <style>
         .stTabs {
             background-color: #f1f3f6;
@@ -256,10 +268,13 @@ def create_styled_tabs(tab_labels):
             padding-bottom: 20px;
         }
     </style>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
     # Create tabs
     return st.tabs(tab_labels)
+
 
 def create_progress_bar(name, progress, status):
     col1, col2, col3 = st.columns([3, 1, 1])
@@ -276,10 +291,11 @@ def create_progress_bar(name, progress, status):
         else:
             st.warning("Not Started")
 
+
 def style_line_chart(fig, ax):
     # Set color scheme
-    line_color = '#3366cc'
-    fill_color = '#e6f0ff'
+    line_color = "#3366cc"
+    fill_color = "#e6f0ff"
 
     # Style the line
     for line in ax.lines:
@@ -288,35 +304,40 @@ def style_line_chart(fig, ax):
         line.set_alpha(0.8)
 
     # Add fill below the line
-    ax.fill_between(range(len(ax.lines[0].get_ydata())),
-                    ax.lines[0].get_ydata(),
-                    color=fill_color,
-                    alpha=0.3)
+    ax.fill_between(
+        range(len(ax.lines[0].get_ydata())),
+        ax.lines[0].get_ydata(),
+        color=fill_color,
+        alpha=0.3,
+    )
 
     # Style the grid
-    ax.grid(True, linestyle='--', alpha=0.3, color='#cccccc')
+    ax.grid(True, linestyle="--", alpha=0.3, color="#cccccc")
     ax.set_axisbelow(True)
 
     # Style the spines
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-    ax.spines['left'].set_color('#888888')
-    ax.spines['bottom'].set_color('#888888')
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_color("#888888")
+    ax.spines["bottom"].set_color("#888888")
 
     # Style the ticks
-    ax.tick_params(axis='both', colors='#888888', labelsize=8)
+    ax.tick_params(axis="both", colors="#888888", labelsize=8)
 
     # Add subtle markers to data points
-    ax.plot(range(len(ax.lines[0].get_ydata())),
-            ax.lines[0].get_ydata(),
-            'o',
-            color=line_color,
-            markersize=4,
-            alpha=0.6)
+    ax.plot(
+        range(len(ax.lines[0].get_ydata())),
+        ax.lines[0].get_ydata(),
+        "o",
+        color=line_color,
+        markersize=4,
+        alpha=0.6,
+    )
 
     # Adjust layout
     fig.tight_layout(pad=2)  # Increased padding
     plt.subplots_adjust(bottom=0.2)  # Add more space at the bottom
+
 
 def create_styled_line_chart(data, x_label, y_label):
     fig, ax = plt.subplots(figsize=(4, 3))
@@ -325,6 +346,7 @@ def create_styled_line_chart(data, x_label, y_label):
     ax.set_ylabel(y_label, fontsize=9)
     style_line_chart(fig, ax)
     return st.pyplot(fig)
+
 
 def create_styled_bar_chart(x, y, x_label, y_label):
     fig, ax = plt.subplots(figsize=(4, 3))
@@ -336,24 +358,31 @@ def create_styled_bar_chart(x, y, x_label, y_label):
     # Add value labels on top of each bar
     for bar in bars:
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2., height,
-                f'{height:.0f}',
-                ha='center', va='bottom', fontsize=8)
+        ax.text(
+            bar.get_x() + bar.get_width() / 2.0,
+            height,
+            f"{height:.0f}",
+            ha="center",
+            va="bottom",
+            fontsize=8,
+        )
 
     # Styling similar to line chart
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-    ax.spines['left'].set_color('#888888')
-    ax.spines['bottom'].set_color('#888888')
-    ax.tick_params(axis='both', colors='#888888', labelsize=8)
-    ax.grid(axis='y', linestyle='--', alpha=0.3, color='#cccccc')
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_color("#888888")
+    ax.spines["bottom"].set_color("#888888")
+    ax.tick_params(axis="both", colors="#888888", labelsize=8)
+    ax.grid(axis="y", linestyle="--", alpha=0.3, color="#cccccc")
     ax.set_axisbelow(True)
 
     fig.tight_layout(pad=1)
     return st.pyplot(fig)
 
+
 def apply_styled_dropdown_css():
-    st.markdown("""
+    st.markdown(
+        """
     <style>
     /* Common styles for both select box and date input */
     .stSelectbox [data-baseweb="select"], .stDateInput > div > div {
@@ -390,25 +419,31 @@ def apply_styled_dropdown_css():
         background-color: #254e9c;
     }
     </style>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
 
-def create_multi_bar_chart(data, x, y, labels, title=None, color_sequence=px.colors.qualitative.Pastel):
+def create_multi_bar_chart(
+    data, x, y, labels, title=None, color_sequence=px.colors.qualitative.Pastel
+):
     fig = go.Figure()
 
     for i, column in enumerate(y):
-        fig.add_trace(go.Bar(
-            x=data[x],
-            y=data[column],
-            name=labels[column],
-            marker_color=color_sequence[i % len(color_sequence)]
-        ))
+        fig.add_trace(
+            go.Bar(
+                x=data[x],
+                y=data[column],
+                name=labels[column],
+                marker_color=color_sequence[i % len(color_sequence)],
+            )
+        )
 
     fig.update_layout(
         title=title,
         xaxis_title=x,
         yaxis_title="Amount",
-        barmode='group',
+        barmode="group",
         legend_title="Category",
         height=400,
         margin=dict(l=20, r=20, t=40, b=20),
@@ -416,7 +451,7 @@ def create_multi_bar_chart(data, x, y, labels, title=None, color_sequence=px.col
 
     fig.update_traces(
         hovertemplate="<b>%{x}</b><br>%{y:,.0f}",
-        marker=dict(line=dict(width=1, color='white'))
+        marker=dict(line=dict(width=1, color="white")),
     )
 
     return fig

@@ -1,5 +1,7 @@
 import base64
+
 import streamlit as st
+
 
 def get_base64_of_bin_file(bin_file):
     with open(bin_file, "rb") as f:
@@ -9,6 +11,7 @@ def get_base64_of_bin_file(bin_file):
 
 def get_base64_of_bytes(bytes_data):
     return base64.b64encode(bytes_data).decode()
+
 
 def set_title_bar(logo_path):
     logo_base64 = get_base64_of_bin_file(logo_path)

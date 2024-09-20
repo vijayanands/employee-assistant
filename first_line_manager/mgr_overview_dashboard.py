@@ -1,8 +1,11 @@
-import streamlit as st
-import pandas as pd
 from datetime import datetime
-from ui.style import create_styled_tabs, create_styled_metric, create_pie_chart, create_styled_bar_chart, \
-    create_multi_bar_chart
+
+import pandas as pd
+import streamlit as st
+
+from ui.style import (create_multi_bar_chart, create_pie_chart,
+                      create_styled_bar_chart, create_styled_metric,
+                      create_styled_tabs)
 
 
 def manager_overview_dashboard():
@@ -10,26 +13,34 @@ def manager_overview_dashboard():
     st.title("Management Dashboard")
 
     # Dummy data
-    resource_allocation_data = pd.DataFrame([
-        {"name": "Project X", "allocation": 80},
-        {"name": "Project Y", "allocation": 20},
-    ])
+    resource_allocation_data = pd.DataFrame(
+        [
+            {"name": "Project X", "allocation": 80},
+            {"name": "Project Y", "allocation": 20},
+        ]
+    )
 
-    compensation_data = pd.DataFrame([
-        {"name": "Salaries", "current": 850000, "budgeted": 900000},
-        {"name": "Bonuses", "current": 50000, "budgeted": 100000},
-    ])
+    compensation_data = pd.DataFrame(
+        [
+            {"name": "Salaries", "current": 850000, "budgeted": 900000},
+            {"name": "Bonuses", "current": 50000, "budgeted": 100000},
+        ]
+    )
 
-    upcoming_learning_opportunities = pd.DataFrame([
-        {"name": "AI Conference", "date": "2024-10-15"},
-        {"name": "Leadership Workshop", "date": "2024-11-01"},
-        {"name": "Advanced React Course", "date": "2024-11-15"},
-    ])
+    upcoming_learning_opportunities = pd.DataFrame(
+        [
+            {"name": "AI Conference", "date": "2024-10-15"},
+            {"name": "Leadership Workshop", "date": "2024-11-01"},
+            {"name": "Advanced React Course", "date": "2024-11-15"},
+        ]
+    )
 
-    employee_recognitions = pd.DataFrame([
-        {"name": "Alice Johnson", "award": "Employee of the Month"},
-        {"name": "Bob Smith", "award": "Innovation Award"},
-    ])
+    employee_recognitions = pd.DataFrame(
+        [
+            {"name": "Alice Johnson", "award": "Employee of the Month"},
+            {"name": "Bob Smith", "award": "Innovation Award"},
+        ]
+    )
 
     # Quick Stats
     st.subheader("Quick Stats")
@@ -42,24 +53,36 @@ def manager_overview_dashboard():
         create_styled_metric("Budget Utilization", "95%", "💰")
 
     # Main content
-    tab1, tab2, tab3, tab4 = create_styled_tabs(["Resource & Compensation", "Employee Development", "Feedback & Recognition", "Upcoming Check-ins"])
+    tab1, tab2, tab3, tab4 = create_styled_tabs(
+        [
+            "Resource & Compensation",
+            "Employee Development",
+            "Feedback & Recognition",
+            "Upcoming Check-ins",
+        ]
+    )
 
     with tab1:
         col1, col2 = st.columns(2)
 
         with col1:
             st.subheader("Resource Allocation")
-            fig = create_pie_chart(resource_allocation_data, names='name', values='allocation', title="Resource Allocation")
+            fig = create_pie_chart(
+                resource_allocation_data,
+                names="name",
+                values="allocation",
+                title="Resource Allocation",
+            )
             st.plotly_chart(fig, use_container_width=True)
 
         with col2:
             st.subheader("Compensation Review")
             fig = create_multi_bar_chart(
                 compensation_data,
-                x='name',
-                y=['current', 'budgeted'],
-                labels={'current': 'Current', 'budgeted': 'Budgeted'},
-                title="Compensation Comparison"
+                x="name",
+                y=["current", "budgeted"],
+                labels={"current": "Current", "budgeted": "Budgeted"},
+                title="Compensation Comparison",
             )
             st.plotly_chart(fig, use_container_width=True)
 
@@ -105,6 +128,7 @@ def manager_overview_dashboard():
     with col_export:
         if st.button("Export Report"):
             st.write("Report exported!")
+
 
 if __name__ == "__main__":
     manager_overview_dashboard()

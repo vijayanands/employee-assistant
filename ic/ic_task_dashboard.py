@@ -1,7 +1,9 @@
-import streamlit as st
+from datetime import datetime, timedelta
+
 import pandas as pd
 import plotly.graph_objects as go
-from datetime import datetime, timedelta
+import streamlit as st
+
 
 def create_styled_task_list(tasks, title):
     styled_list_css = """
@@ -51,7 +53,12 @@ def create_styled_task_list(tasks, title):
     </style>
     """
 
-    task_items = "".join([f"<li>{task['name']}<div class='task-caption'>{task['project']}</div></li>" for task in tasks])
+    task_items = "".join(
+        [
+            f"<li>{task['name']}<div class='task-caption'>{task['project']}</div></li>"
+            for task in tasks
+        ]
+    )
     list_html = f"""
     <div class="styled-task-list-container">
         <div class="styled-task-list-title">{title}</div>
@@ -67,8 +74,10 @@ def create_styled_task_list(tasks, title):
     # Render the styled list using st.markdown
     st.markdown(full_html, unsafe_allow_html=True)
 
+
 def set_page_config():
-    st.markdown("""
+    st.markdown(
+        """
     <style>
     .stApp {
         background-color: #f0f2f6;
@@ -86,7 +95,10 @@ def set_page_config():
         margin-bottom: 15px;
     }
     </style>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
+
 
 def generate_dummy_data():
     return {
@@ -97,40 +109,50 @@ def generate_dummy_data():
         "tasks_completed": 7,
         "tasks_in_progress": 3,
         "upcoming_deadline": datetime.now() + timedelta(days=2),
-        "task_id": "1234"
+        "task_id": "1234",
     }
 
+
 def create_bar_chart(data):
-    categories = ['Assigned', 'Completed', 'In Progress']
-    values = [data['tasks_assigned'], data['tasks_completed'], data['tasks_in_progress']]
-    
-    fig = go.Figure(data=[go.Bar(x=categories, y=values, marker_color='rgb(102,102,255)')])
+    categories = ["Assigned", "Completed", "In Progress"]
+    values = [
+        data["tasks_assigned"],
+        data["tasks_completed"],
+        data["tasks_in_progress"],
+    ]
+
+    fig = go.Figure(
+        data=[go.Bar(x=categories, y=values, marker_color="rgb(102,102,255)")]
+    )
     fig.update_layout(
-        title_text='Task Overview',
+        title_text="Task Overview",
         xaxis_title="Status",
         yaxis_title="Number of Tasks",
-        plot_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor="rgba(0,0,0,0)",
         height=300,
-        margin=dict(l=20, r=20, t=40, b=20)
+        margin=dict(l=20, r=20, t=40, b=20),
     )
     return fig
 
+
 def card(title, content):
-    st.markdown(f'<div class="card"><div class="card-title">{title}</div>{content}</div>', unsafe_allow_html=True)
+    st.markdown(
+        f'<div class="card"><div class="card-title">{title}</div>{content}</div>',
+        unsafe_allow_html=True,
+    )
+
 
 def task_board():
     tasks = {
-        'To Do': [
-            {'name': "Design UI mockups", 'project': "Project A"},
-            {'name': "Deploy to staging", 'project': "Project B"}
+        "To Do": [
+            {"name": "Design UI mockups", "project": "Project A"},
+            {"name": "Deploy to staging", "project": "Project B"},
         ],
-        'In Progress': [
-            {'name': "Implement login functionality", 'project': "Project B"},
-            {'name': "Conduct user testing", 'project': "Project A"}
+        "In Progress": [
+            {"name": "Implement login functionality", "project": "Project B"},
+            {"name": "Conduct user testing", "project": "Project A"},
         ],
-        'Completed': [
-            {'name': "Write unit tests", 'project': "Project A"}
-        ]
+        "Completed": [{"name": "Write unit tests", "project": "Project A"}],
     }
 
     cols = st.columns(3)
@@ -138,14 +160,17 @@ def task_board():
         with cols[i]:
             create_styled_task_list(task_list, status)
 
+
 def ic_tasks_dashboard():
     set_page_config()
     st.title("My Tasks Dashboard")
-    
+
     data = generate_dummy_data()
-    
+
     # Weekly Report Status
-    card("Weekly Report", """
+    card(
+        "Weekly Report",
+        """
     <table width="100%">
         <tr>
             <td>Last Report Sent:</td>
@@ -160,10 +185,16 @@ def ic_tasks_dashboard():
             <td>Team Lead, Project Manager</td>
         </tr>
     </table>
-    """.format(data['last_report_sent'].strftime('%b %d, %Y'), data['next_report_scheduled'].strftime('%b %d, %Y')))
-    
+    """.format(
+            data["last_report_sent"].strftime("%b %d, %Y"),
+            data["next_report_scheduled"].strftime("%b %d, %Y"),
+        ),
+    )
+
     # Project Status
-    card("Project Status", """
+    card(
+        "Project Status",
+        """
     <table width="100%">
         <tr>
             <td>Active Projects:</td>
@@ -186,16 +217,24 @@ def ic_tasks_dashboard():
             <td>Task ID {} due on {}</td>
         </tr>
     </table>
-    """.format(data['active_projects'], data['tasks_assigned'], data['tasks_completed'], 
-               data['tasks_in_progress'], data['task_id'], data['upcoming_deadline'].strftime('%b %d, %Y')))
-    
+    """.format(
+            data["active_projects"],
+            data["tasks_assigned"],
+            data["tasks_completed"],
+            data["tasks_in_progress"],
+            data["task_id"],
+            data["upcoming_deadline"].strftime("%b %d, %Y"),
+        ),
+    )
+
     # Task Overview Chart
     card("Task Overview", "")
     st.plotly_chart(create_bar_chart(data), use_container_width=True)
-    
+
     # Task Board
     card("Task Board", "")
     task_board()
+
 
 if __name__ == "__main__":
     ic_tasks_dashboard()

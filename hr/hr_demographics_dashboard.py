@@ -1,6 +1,8 @@
-import streamlit as st
 import pandas as pd
-from ui.style import create_pie_chart, display_pie_chart, create_multi_bar_chart, create_styled_tabs, apply_styled_dropdown_css
+import streamlit as st
+
+from ui.style import (apply_styled_dropdown_css, create_multi_bar_chart,
+                      create_pie_chart, create_styled_tabs, display_pie_chart)
 
 # Dummy data (unchanged)
 dummyData = {
@@ -46,6 +48,7 @@ ethnicity_df = pd.DataFrame(dummyData["ethnicityDistribution"])
 tenure_df = pd.DataFrame(dummyData["tenureDistribution"])
 diversity_hiring_df = pd.DataFrame(dummyData["diversityHiring"])
 
+
 def diversity_index_component(score):
     return f"""
     <div style="
@@ -60,6 +63,7 @@ def diversity_index_component(score):
         <div style="font-size: 18px; color: #666;">out of 100</div>
     </div>
     """
+
 
 def hr_demographics_dashboard():
     st.title("Employee Demographics & Diversity Dashboard")
@@ -77,13 +81,12 @@ def hr_demographics_dashboard():
     col1, col2 = st.columns(2)
     with col1:
         filter_option = st.selectbox(
-            "Filter by:",
-            ("All Employees", "By Department", "By Role", "By Location")
+            "Filter by:", ("All Employees", "By Department", "By Role", "By Location")
         )
     with col2:
         duration_option = st.selectbox(
             "Time period:",
-            ("Last 30 days", "Last 90 days", "Last 6 months", "Last year", "All time")
+            ("Last 30 days", "Last 90 days", "Last 6 months", "Last year", "All time"),
         )
 
     # Create tabs for different sections
@@ -93,17 +96,23 @@ def hr_demographics_dashboard():
         col1, col2 = st.columns(2)
 
         with col1:
-            fig_gender = create_pie_chart(gender_df, "name", "value", "Gender Distribution")
+            fig_gender = create_pie_chart(
+                gender_df, "name", "value", "Gender Distribution"
+            )
             display_pie_chart(fig_gender)
 
-            fig_ethnicity = create_pie_chart(ethnicity_df, "name", "value", "Ethnicity/Race Representation")
+            fig_ethnicity = create_pie_chart(
+                ethnicity_df, "name", "value", "Ethnicity/Race Representation"
+            )
             display_pie_chart(fig_ethnicity)
 
         with col2:
             fig_age = create_pie_chart(age_df, "name", "value", "Age Demographics")
             display_pie_chart(fig_age)
 
-            fig_tenure = create_pie_chart(tenure_df, "name", "value", "Tenure Distribution")
+            fig_tenure = create_pie_chart(
+                tenure_df, "name", "value", "Tenure Distribution"
+            )
             display_pie_chart(fig_tenure)
 
     with tabs[1]:
@@ -113,9 +122,10 @@ def hr_demographics_dashboard():
             "year",
             ["diverse", "nonDiverse"],
             {"diverse": "Diverse Hires", "nonDiverse": "Non-Diverse Hires"},
-            "Diversity Hiring Metrics"
+            "Diversity Hiring Metrics",
         )
         st.plotly_chart(fig_diversity, use_container_width=True)
+
 
 if __name__ == "__main__":
     hr_demographics_dashboard()

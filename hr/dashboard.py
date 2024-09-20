@@ -1,10 +1,11 @@
 import streamlit as st
 
-from hr.st_hr_compliance_engagement_dashboard import hr_engagement_and_compliance_dashboard
-from hr.st_hr_dashboard import hr_overview_dashboard
-from hr.st_hr_demographics_dashboard import hr_demographics_dashboard
-from hr.st_hr_recruitment_dashboard import hr_recruitment_dashboard
-from hr.st_hr_training_dashboard import hr_training_dashboard
+from hr.hr_compliance_engagement_dashboard import \
+    hr_engagement_and_compliance_dashboard
+from hr.hr_overview_dashboard import hr_overview_dashboard
+from hr.hr_demographics_dashboard import hr_demographics_dashboard
+from hr.hr_recruitment_dashboard import hr_recruitment_dashboard
+from hr.hr_training_dashboard import hr_training_dashboard
 
 
 def show_hr_dashboard(nav_option):

@@ -1,9 +1,12 @@
 import streamlit as st
 
-from first_line_manager.st_1st_line_engagement_compliance import manager_engagement_and_compliance_dashboard
-from first_line_manager.st_mgr1_performance_metrics import manager_performance_dashboard
-from first_line_manager.st_mgr_dashboard import manager_overview_dashboard
-from first_line_manager.combined_productivity_dashboard import productivity_dashboard
+from first_line_manager.mgr_productivity_dashboard import \
+    productivity_dashboard
+from first_line_manager.mgr_engagement_compliance_dashboard import \
+    manager_engagement_and_compliance_dashboard
+from first_line_manager.mgr_performance_metrics_dashboard import \
+    manager_performance_dashboard
+from first_line_manager.mgr_overview_dashboard import manager_overview_dashboard
 
 
 def show_first_line_manager_dashboard(nav_option):
